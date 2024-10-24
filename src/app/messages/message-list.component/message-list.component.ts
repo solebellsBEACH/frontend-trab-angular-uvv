@@ -1,26 +1,32 @@
-import { Component, OnInit, EventEmitter, Output } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { MessageComponentSignal } from "../message-signal.component/message-signal.component";
 import { Message } from "../message.model";
 import { MessageService } from "../message.services";
-import { Observable } from "rxjs";
+import { Observable, catchError, of } from "rxjs";
 import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "app-message-list",
   standalone: true,
-  imports: [FormsModule, MessageComponentSignal, CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: "./message-list.component.html",
-  // providers: [MessageService]
 })
 export class MessageListComponent implements OnInit {
-  messages$: Observable<Message[]>; // Lista de mensagens
+  messages$: Observable<Message[]>;
 
   constructor(private messageService: MessageService) {
-    this.messages$ = this.messageService.getMessages();
+    this.messages$ = this.messageService.getMessages().pipe(
+      catchError((error) => {
+        console.error('Erro ao obter mensagens:', error);
+        return of([]);
+      })
+    );
   }
 
   ngOnInit(): void {
-    this.messages$.subscribe(console.log);
+    this.messages$.subscribe({
+      next: (messages) => console.log('Mensagens recebidas:', messages),
+      error: (error) => console.error('Erro na subscrição:', error),
+    });
   }
 }

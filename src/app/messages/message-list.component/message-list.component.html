@@ -1,7 +1,15 @@
-<div class="col-md-8 col-md-offset-2">
-  <app-message-signal
-    *ngFor="let message of messages$ | async"
-    [messageVarClasse]="message"
-  >
-  </app-message-signal>
+<div class="message-list">
+  <h2>Lista de Mensagens</h2>
+  <ul>
+    <li *ngFor="let message of messages$ | async">
+      <div class="message-card">
+        <img *ngIf="message?.user" [src]="message.user.imageURL"
+          alt="{{ message.user.firstName }} {{ message.user.lastName }}" class="user-image">
+        <div class="message-content">
+          <h3>{{ message.username }}</h3>
+          <p>{{ message.content }}</p>
+        </div>
+      </div>
+    </li>
+  </ul>
 </div>

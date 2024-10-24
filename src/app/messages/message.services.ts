@@ -11,7 +11,7 @@ export class MessageService {
   private baseUrl = "http://localhost:3000/message"; // URL base para as operações de mensagem
   private messageSService: Message[] = []; // Array local para armazenar as mensagens
 
-  constructor(private http: HttpClient) {} // Injeta HttpClient para fazer solicitações HTTP
+  constructor(private http: HttpClient) { } // Injeta HttpClient para fazer solicitações HTTP
 
   // Método para lidar com erros
   errorHandler(error: any, info: string) {
@@ -42,7 +42,7 @@ export class MessageService {
     return this.http.get<any>(`${this.baseUrl}/getMessages`).pipe(
       // Envia uma solicitação GET para obter todas as mensagens do backend
       map((response) => {
-        return response.objSMessageSRecuperadoS;
+        return response.messages
       }),
       catchError((error) =>
         this.errorHandler(error, "Erro ao recuperar mensagens")
