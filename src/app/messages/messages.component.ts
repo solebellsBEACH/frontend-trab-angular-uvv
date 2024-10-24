@@ -9,7 +9,7 @@ import { MessageInputComponent } from "./message-input.component/message-input.c
     imports: [
 
         MessageListComponent, MessageInputComponent
-             ],
+    ],
     template: `
                 <div class="row">
                     <app-message-input></app-message-input>
@@ -20,6 +20,6 @@ import { MessageInputComponent } from "./message-input.component/message-input.c
                 </div>        
     `
 })
-export class MessagesComponent{
+export class MessagesComponent {
 
 }

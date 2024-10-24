@@ -178,3 +178,8 @@ blockquote {
     padding-left: 10px;
     margin: 10px 0;
 }
+
+.user-image {
+    height: 300px;
+    width: 300px;
+}
