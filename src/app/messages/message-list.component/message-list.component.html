@@ -1,4 +1,4 @@
-<div class="message-list">
+<div class="message-list" *ngIf="!(editModalActive$|async)">
   <h2>Lista de Mensagens</h2>
   <ul>
     <li *ngFor="let message of messages$ | async">
@@ -9,7 +9,32 @@
           <h3>{{ message.username }}</h3>
           <p>{{ message.content }}</p>
         </div>
+        <div class="config">
+          <!-- Configurações da mensagem -->
+          <button (click)="onDelete($event, message._id)" class="delete-btn">
+            Delete
+          </button>
+          <!-- Botão de exclusão da mensagem -->
+          <button (click)="onEdit(message)" class="edit-btn">Editar</button>
+          <!-- Botão de edição da mensagem -->
+        </div>
       </div>
     </li>
   </ul>
+</div>
+
+<div class="modal is-active" *ngIf="editModalActive$|async">
+  <!-- Modal de edição -->
+  <div class="modal-content">
+    <!-- Conteúdo do modal -->
+    <div class="box">
+      <!-- Caixa de edição -->
+      <textarea [(ngModel)]="editedMessageContent" class="edit-textarea"></textarea>
+      <!-- Textarea para editar o conteúdo da mensagem -->
+      <button class="button is-success" (click)="onSave()">
+        Salvar
+      </button>
+      <!-- Botão para salvar as alterações -->
+    </div>
+  </div>
 </div>
